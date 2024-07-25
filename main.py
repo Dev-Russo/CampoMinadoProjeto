@@ -56,9 +56,9 @@ class Jogo:
 
     def check_vitoria(self):
         # Verifica se todos os pisos que não são minas foram revelados
-        for row in self.board.lista_do_tabuleiro:
+        for row in self.board.get_lista_do_tabuleiro:
             for tile in row:
-                if tile.tipo != "X" and not tile.revelado:
+                if tile.get_tipo != "X" and not tile.get_revelado:
                     return False
         return True
 
@@ -81,7 +81,7 @@ class Jogo:
                     my //= TAMANHOPISO
 
                     if event.button == 1:  # Clique com o botão esquerdo do mouse
-                        if not self.board.lista_do_tabuleiro[mx][my].bandeira:
+                        if not self.board.get_lista_do_tabuleiro[mx][my].get_bandeira:
                             # Se o piso não tem bandeira e não é uma mina
                             if not self.board.cavar(mx, my):
                                 # Se o piso cavado é uma mina, termina o jogo
@@ -90,23 +90,23 @@ class Jogo:
                                 self.end_screen("Você Perdeu!")
 
                     if event.button == 3:  # Clique com o botão direito do mouse
-                        if not self.board.lista_do_tabuleiro[mx][my].revelado:
+                        if not self.board.get_lista_do_tabuleiro[mx][my].get_revelado:
                             # Alterna a bandeira no piso clicado
-                            self.board.lista_do_tabuleiro[mx][my].bandeira = not self.board.lista_do_tabuleiro[mx][my].bandeira
+                            self.board.get_lista_do_tabuleiro[mx][my].set_bandeira = not self.board.get_lista_do_tabuleiro[mx][my].get_bandeira
 
     def revelar_todos_os_pisos(self):
         # Revela todos os pisos do tabuleiro
-        for row in self.board.lista_do_tabuleiro:
+        for row in self.board.get_lista_do_tabuleiro:
             for tile in row:
-                tile.revelado = True
+                tile.set_revelado = True
                 # Define a imagem do piso conforme o tipo
-                if tile.tipo == "X":
-                    tile.imagem = tile_mine
-                elif tile.tipo == "C":
-                    total_minas = self.board.vizinhos(tile.x // TAMANHOPISO, tile.y // TAMANHOPISO)
-                    tile.imagem = tile_numbers[total_minas - 1]
+                if tile.get_tipo == "X":
+                    tile.set_imagem = tile_mine
+                elif tile.get_tipo == "C":
+                    total_minas = self.board.vizinhos(tile.get_x // TAMANHOPISO, tile.get_y // TAMANHOPISO)
+                    tile.set_imagem = tile_numbers[total_minas - 1]
                 else:
-                    tile.imagem = tile_empty
+                    tile.set_imagem = tile_empty
 
     def end_screen(self, mensagem):
         # Exibe a tela final com a mensagem e aguarda o clique do mouse para reiniciar
